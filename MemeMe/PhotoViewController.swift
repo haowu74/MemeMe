@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     // Mark: IBOutlet
     
@@ -40,8 +40,15 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     // Mark: member variables
+    
     let topDefaultText = "TOP"
     let bottomDefaultText = "BOTTOM"
+    
+    let memeTextAttributes:[String:Any] = [
+        NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
+        NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
+        NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+        NSAttributedStringKey.strokeWidth.rawValue: -2.0]
     
     
     // Mark: overridden functions
@@ -49,11 +56,18 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        topTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.defaultTextAttributes = memeTextAttributes
+        
         topTextField.text = topDefaultText
         topTextField.textAlignment = .center
+        topTextField.delegate = self
         bottomTextField.text = bottomDefaultText
         bottomTextField.textAlignment = .center
+        bottomTextField.delegate = self
         imagePickerView.image = nil
+        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,7 +89,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
             sender.text = topDefaultText
         }
     }
-    // Mark: delegation functions
+    // Mark: UIImagePickerControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
@@ -86,6 +100,13 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    // Mark: UITextFieldDelegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
     }
 }
 
