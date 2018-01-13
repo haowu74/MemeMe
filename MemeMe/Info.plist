@@ -41,5 +41,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Impact.ttf</string>
+	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>MemeMe needs to use your camera.</string>
 </dict>
 </plist>
