@@ -39,6 +39,16 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBAction func shareButtonTouched(_ sender: Any) {
     }
     
+    @IBAction func topTextFIeldEditingDidBegin(_ sender: UITextField) {
+        sender.text = ""
+    }
+    
+    @IBAction func topTextFieldEditingDidEnd(_ sender: UITextField) {
+        if sender.text == "" {
+            sender.text = topDefaultText
+        }
+    }
+    
     // Mark: member variables
     
     let topDefaultText = "TOP"
@@ -50,7 +60,32 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSAttributedStringKey.strokeWidth.rawValue: -2.0]
     
+    // Mark: member functions
     
+    
+    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.cgRectValue.height
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        self.view.frame.origin.y -= getKeyboardHeight(notification)
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        self.view.frame.origin.y += getKeyboardHeight(notification)
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+    }
     // Mark: overridden functions
     
     override func viewDidLoad() {
@@ -80,15 +115,16 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
 
     }
     
-    @IBAction func topTextFIeldEditingDidBegin(_ sender: UITextField) {
-        sender.text = ""
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
     }
     
-    @IBAction func topTextFieldEditingDidEnd(_ sender: UITextField) {
-        if sender.text == "" {
-            sender.text = topDefaultText
-        }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
     }
+
     // Mark: UIImagePickerControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -108,5 +144,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         textField.resignFirstResponder()
         return false
     }
+    
+
 }
 

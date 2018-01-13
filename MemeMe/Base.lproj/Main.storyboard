@@ -65,7 +65,7 @@
                                 <rect key="frame" x="60" y="94" width="255" height="47"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="36"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                 <connections>
                                     <action selector="topTextFIeldEditingDidBegin:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="bcq-oi-nYd"/>
                                     <action selector="topTextFieldEditingDidEnd:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="4iX-OF-kec"/>
@@ -75,7 +75,7 @@
                                 <rect key="frame" x="60" y="546" width="255" height="47"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="36"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
