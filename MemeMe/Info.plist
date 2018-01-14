@@ -47,5 +47,9 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>MemeMe needs to use your camera.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>MemeMe needs to use your photo library.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>MemeMe needs to use your photo library.</string>
 </dict>
 </plist>

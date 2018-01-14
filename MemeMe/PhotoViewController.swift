@@ -12,10 +12,13 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
 
     // Mark: IBOutlet
     
+    @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var imagePickerView: UIImageView!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     
     // Mark: IBAction
     
@@ -37,6 +40,15 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         imagePickerView.image = nil
     }
     @IBAction func shareButtonTouched(_ sender: Any) {
+        memedImage = generateMemedImage()
+        let shareController = UIActivityViewController(activityItems: [memedImage!], applicationActivities: nil)
+        shareController.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) -> Void in
+            if completed == true {
+                self.save()
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        self.present(shareController, animated: true, completion: nil)
     }
     
     @IBAction func topTextFIeldEditingDidBegin(_ sender: UITextField) {
@@ -50,7 +62,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     // Mark: member variables
-    
+    var memedImage: UIImage?
     let topDefaultText = "TOP"
     let bottomDefaultText = "BOTTOM"
     
@@ -61,7 +73,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         NSAttributedStringKey.strokeWidth.rawValue: -2.0]
     
     // Mark: member functions
-    
     
     func getKeyboardHeight(_ notification:Notification) -> CGFloat {
         let userInfo = notification.userInfo
@@ -86,6 +97,29 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
+    
+    func generateMemedImage() -> UIImage {
+        
+        navBar.isHidden = true
+        toolBar.isHidden = true
+        
+        // Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        navBar.isHidden = false
+        toolBar.isHidden = false
+        
+        return memedImage
+    }
+    
+    func save() {
+        // Create the meme
+        //let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
+    }
+    
     // Mark: overridden functions
     
     override func viewDidLoad() {
@@ -102,17 +136,12 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         bottomTextField.delegate = self
         imagePickerView.image = nil
         
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        shareButton.isEnabled = false
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
-
+        super.viewDidAppear(animated)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -130,6 +159,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             imagePickerView.image = image
+            shareButton.isEnabled = true
         }
         dismiss(animated: true, completion: nil)
     }

@@ -103,6 +103,9 @@
                         <outlet property="bottomTextField" destination="Kc6-F2-208" id="SkT-3X-95M"/>
                         <outlet property="cameraButton" destination="oev-AT-WGy" id="BiX-HB-Z2N"/>
                         <outlet property="imagePickerView" destination="UFw-s7-pBG" id="oFM-dF-F2d"/>
+                        <outlet property="navBar" destination="hid-9N-2VK" id="ZIz-cc-ZHv"/>
+                        <outlet property="shareButton" destination="eEh-U0-rgW" id="9bf-QO-CVM"/>
+                        <outlet property="toolBar" destination="miV-kt-HNh" id="8Ak-Mk-FW5"/>
                         <outlet property="topTextField" destination="56r-ep-h78" id="23b-Sa-r1e"/>
                     </connections>
                 </viewController>
