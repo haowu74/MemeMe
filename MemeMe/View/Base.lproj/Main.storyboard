@@ -23,6 +23,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UFw-s7-pBG">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="56r-ep-h78" userLabel="Top Text Field">
+                                <rect key="frame" x="60" y="94" width="255" height="47"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="36"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <connections>
+                                    <action selector="topTextFieldEditingDidBegin:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="bcq-oi-nYd"/>
+                                    <action selector="topTextFieldEditingDidEnd:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="4iX-OF-kec"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kc6-F2-208" userLabel="Bottom Text Field">
+                                <rect key="frame" x="60" y="536" width="255" height="47"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="36"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <connections>
+                                    <action selector="bottomTextFieldEdittingDidBegin:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="ads-Ek-hLh"/>
+                                    <action selector="bottomTextFieldEdittingDidEnd:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="CcI-Xg-Gjs"/>
+                                </connections>
+                            </textField>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hid-9N-2VK">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
@@ -40,7 +63,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="miV-kt-HNh">
+                            <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="miV-kt-HNh">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="SZZ-N1-a6G"/>
@@ -58,50 +81,33 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Z31-cN-YA5"/>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UFw-s7-pBG">
-                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
-                            </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="56r-ep-h78" userLabel="Top Text Field">
-                                <rect key="frame" x="60" y="94" width="255" height="47"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="36"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                                <connections>
-                                    <action selector="topTextFIeldEditingDidBegin:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="bcq-oi-nYd"/>
-                                    <action selector="topTextFieldEditingDidEnd:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="4iX-OF-kec"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kc6-F2-208" userLabel="Bottom Text Field">
-                                <rect key="frame" x="60" y="546" width="255" height="47"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="36"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="56r-ep-h78" secondAttribute="trailing" constant="60" id="3bA-C6-epA"/>
+                            <constraint firstItem="UFw-s7-pBG" firstAttribute="bottom" secondItem="miV-kt-HNh" secondAttribute="top" id="4tW-xy-w5j"/>
                             <constraint firstItem="miV-kt-HNh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="9fe-tI-UkT"/>
                             <constraint firstItem="miV-kt-HNh" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="A1e-pV-p0V"/>
                             <constraint firstItem="hid-9N-2VK" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Awf-GQ-Bgl"/>
                             <constraint firstItem="Kc6-F2-208" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="60" id="BGS-dS-qIn"/>
                             <constraint firstItem="56r-ep-h78" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="60" id="JBx-7z-dve"/>
                             <constraint firstItem="hid-9N-2VK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="JvK-R8-jxf"/>
-                            <constraint firstItem="miV-kt-HNh" firstAttribute="top" secondItem="UFw-s7-pBG" secondAttribute="bottom" id="Pmp-7j-hQU"/>
                             <constraint firstItem="UFw-s7-pBG" firstAttribute="top" secondItem="hid-9N-2VK" secondAttribute="bottom" id="UrP-e4-NvJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Kc6-F2-208" secondAttribute="trailing" constant="60" id="WI6-bU-ccr"/>
                             <constraint firstItem="UFw-s7-pBG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YUs-Ms-kGu"/>
                             <constraint firstItem="miV-kt-HNh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eKc-ni-xtq"/>
                             <constraint firstItem="hid-9N-2VK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="iW9-ch-7Nc"/>
-                            <constraint firstItem="miV-kt-HNh" firstAttribute="top" secondItem="Kc6-F2-208" secondAttribute="bottom" constant="30" id="lP5-UW-hLK"/>
                             <constraint firstItem="56r-ep-h78" firstAttribute="top" secondItem="hid-9N-2VK" secondAttribute="bottom" constant="30" id="oly-Ag-2zP"/>
+                            <constraint firstItem="Kc6-F2-208" firstAttribute="bottom" secondItem="miV-kt-HNh" secondAttribute="top" constant="-40" id="s3X-XN-fYN"/>
                             <constraint firstItem="UFw-s7-pBG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="z2O-FM-Oej"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="bottomTextField" destination="Kc6-F2-208" id="SkT-3X-95M"/>
+                        <outlet property="bottomTextFieldBottomConstraint" destination="s3X-XN-fYN" id="eKf-XZ-gwb"/>
                         <outlet property="cameraButton" destination="oev-AT-WGy" id="BiX-HB-Z2N"/>
+                        <outlet property="cancelButton" destination="5IQ-IE-UqH" id="P6g-HX-6XU"/>
                         <outlet property="imagePickerView" destination="UFw-s7-pBG" id="oFM-dF-F2d"/>
                         <outlet property="navBar" destination="hid-9N-2VK" id="ZIz-cc-ZHv"/>
                         <outlet property="shareButton" destination="eEh-U0-rgW" id="9bf-QO-CVM"/>

@@ -19,6 +19,8 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var bottomTextFieldBottomConstraint: NSLayoutConstraint!
     
     // Mark: IBAction
     
@@ -34,11 +36,17 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         pickerController.sourceType = .photoLibrary
         self.present(pickerController, animated: true, completion: nil)
     }
+    
     @IBAction func cancelButtonTouched(_ sender: Any) {
         topTextField.text = topDefaultText
         bottomTextField.text = bottomDefaultText
         imagePickerView.image = nil
+        cancelButton.isEnabled = false
+        topTextField.isEnabled = false
+        bottomTextField.isEnabled = false
+        self.view.endEditing(true)
     }
+    
     @IBAction func shareButtonTouched(_ sender: Any) {
         memedImage = generateMemedImage()
         let shareController = UIActivityViewController(activityItems: [memedImage!], applicationActivities: nil)
@@ -51,26 +59,49 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         self.present(shareController, animated: true, completion: nil)
     }
     
-    @IBAction func topTextFIeldEditingDidBegin(_ sender: UITextField) {
+    @IBAction func topTextFieldEditingDidBegin(_ sender: UITextField) {
         sender.text = ""
+        shareButton.isEnabled = false
+        cancelButton.isEnabled = false
     }
     
     @IBAction func topTextFieldEditingDidEnd(_ sender: UITextField) {
         if sender.text == "" {
             sender.text = topDefaultText
         }
+        shareButton.isEnabled = true
+        cancelButton.isEnabled = true
     }
+    
+    @IBAction func bottomTextFieldEdittingDidBegin(_ sender: UITextField) {
+        sender.text = ""
+        shareButton.isEnabled = false
+        cancelButton.isEnabled = false
+        subscribeToKeyboardNotifications()
+    }
+    
+    @IBAction func bottomTextFieldEdittingDidEnd(_ sender: UITextField) {
+        if sender.text == "" {
+            sender.text = bottomDefaultText
+        }
+        unsubscribeFromKeyboardNotifications()
+        shareButton.isEnabled = true
+        cancelButton.isEnabled = true
+    }
+    
     
     // Mark: member variables
     var memedImage: UIImage?
+    var meme: Meme?
     let topDefaultText = "TOP"
     let bottomDefaultText = "BOTTOM"
     
     let memeTextAttributes:[String:Any] = [
         NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
         NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
-        NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        NSAttributedStringKey.strokeWidth.rawValue: -2.0]
+        NSAttributedStringKey.font.rawValue: UIFont(name: "MarkerFelt-Wide", size: 40)!,
+        NSAttributedStringKey.strokeWidth.rawValue: -1.0
+    ]
     
     // Mark: member functions
     
@@ -81,11 +112,15 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        self.view.frame.origin.y -= getKeyboardHeight(notification)
+        let offset = getKeyboardHeight(notification)
+        //I only want to move the bottom text field
+        bottomTextFieldBottomConstraint.constant -= offset
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        self.view.frame.origin.y += getKeyboardHeight(notification)
+        let offset = getKeyboardHeight(notification)
+        //I only want to move the bottom text field
+        bottomTextFieldBottomConstraint.constant += offset
     }
     
     func subscribeToKeyboardNotifications() {
@@ -117,41 +152,49 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     func save() {
         // Create the meme
-        //let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
+        self.meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage!)
+        
     }
     
     // Mark: overridden functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         topTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
         
         topTextField.text = topDefaultText
+        
+        topTextField.isEnabled = false
         topTextField.textAlignment = .center
         topTextField.delegate = self
+        
         bottomTextField.text = bottomDefaultText
+        bottomTextField.isEnabled = false
         bottomTextField.textAlignment = .center
         bottomTextField.delegate = self
         imagePickerView.image = nil
-        
+        cancelButton.isEnabled = false
         shareButton.isEnabled = false
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        
+ 
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        subscribeToKeyboardNotifications()
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        unsubscribeFromKeyboardNotifications()
+        
     }
 
     // Mark: UIImagePickerControllerDelegate
@@ -160,7 +203,13 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             imagePickerView.image = image
             shareButton.isEnabled = true
+            topTextField.isEnabled = true
+            bottomTextField.isEnabled = true
+            topTextField.text = topDefaultText
+            bottomTextField.text = bottomDefaultText
+            cancelButton.isEnabled = true
         }
+        // Why the toolbar is always squeezed every time when UIImagePickerController is dismissed with imagePickerView.image being assigned? Is it a bug? Maybe we should create a separate ViewController 
         dismiss(animated: true, completion: nil)
     }
     
