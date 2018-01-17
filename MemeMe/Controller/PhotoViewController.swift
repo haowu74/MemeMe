@@ -120,6 +120,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @objc func keyboardWillHide(_ notification: Notification) {
         let offset = getKeyboardHeight(notification)
         //I only want to move the bottom text field
+        // Todo: Not working when I tap the "Dismiss Key" on iPad!
         bottomTextFieldBottomConstraint.constant += offset
     }
     
@@ -209,7 +210,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
             bottomTextField.text = bottomDefaultText
             cancelButton.isEnabled = true
         }
-        // Why the toolbar is always squeezed every time when UIImagePickerController is dismissed with imagePickerView.image being assigned? Is it a bug? Maybe we should create a separate ViewController 
+        // Todo: Why the toolbar is always squeezed every time when UIImagePickerController is dismissed with imagePickerView.image being assigned? Is it a bug? Maybe we should create a separate ViewController 
         dismiss(animated: true, completion: nil)
     }
     
