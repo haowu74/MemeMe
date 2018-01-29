@@ -65,6 +65,9 @@
                             </navigationBar>
                             <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="miV-kt-HNh">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="DBY-qg-AAf"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="SZZ-N1-a6G"/>
                                     <barButtonItem systemItem="camera" id="oev-AT-WGy" userLabel="CameraButton">

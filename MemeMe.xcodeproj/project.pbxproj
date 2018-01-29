@@ -13,6 +13,7 @@
 		284BBF212008DBC80055A5D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 284BBF202008DBC80055A5D0 /* Assets.xcassets */; };
 		284BBF242008DBC80055A5D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 284BBF222008DBC80055A5D0 /* LaunchScreen.storyboard */; };
 		286ABAEB200E1C3E0087CB19 /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286ABAEA200E1C3E0087CB19 /* Meme.swift */; };
+		28E61494201F49E300876847 /* PhotoViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E61493201F49E300876847 /* PhotoViewControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		284BBF232008DBC80055A5D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		284BBF252008DBC80055A5D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		286ABAEA200E1C3E0087CB19 /* Meme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
+		28E61493201F49E300876847 /* PhotoViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewControllerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,9 +88,18 @@
 		286ABAE9200E1BF10087CB19 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				28E61492201F49BD00876847 /* Extensions */,
 				284BBF1B2008DBC80055A5D0 /* PhotoViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		28E61492201F49BD00876847 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				28E61493201F49E300876847 /* PhotoViewControllerExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,6 +177,7 @@
 				286ABAEB200E1C3E0087CB19 /* Meme.swift in Sources */,
 				284BBF1C2008DBC80055A5D0 /* PhotoViewController.swift in Sources */,
 				284BBF1A2008DBC80055A5D0 /* AppDelegate.swift in Sources */,
+				28E61494201F49E300876847 /* PhotoViewControllerExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

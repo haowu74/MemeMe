@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class PhotoViewController: UIViewController {
 
     // Mark: IBOutlet
     
@@ -25,16 +25,10 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     // Mark: IBAction
     
     @IBAction func cameraButtonTouched(_ sender: Any) {
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.sourceType = .camera
-        self.present(pickerController, animated: true, completion: nil)
+        chooseSourceType(.camera)
     }
     @IBAction func albumButtonTouched(_ sender: Any) {
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.sourceType = .photoLibrary
-        self.present(pickerController, animated: true, completion: nil)
+        chooseSourceType(.photoLibrary)
     }
     
     @IBAction func cancelButtonTouched(_ sender: Any) {
@@ -44,6 +38,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         cancelButton.isEnabled = false
         topTextField.isEnabled = false
         bottomTextField.isEnabled = false
+        shareButton.isEnabled = false
         self.view.endEditing(true)
     }
     
@@ -51,7 +46,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         memedImage = generateMemedImage()
         let shareController = UIActivityViewController(activityItems: [memedImage!], applicationActivities: nil)
         shareController.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) -> Void in
-            if completed == true {
+            if completed {
                 self.save()
                 self.dismiss(animated: true, completion: nil)
             }
@@ -77,14 +72,14 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         sender.text = ""
         shareButton.isEnabled = false
         cancelButton.isEnabled = false
-        subscribeToKeyboardNotifications()
+        
     }
     
     @IBAction func bottomTextFieldEdittingDidEnd(_ sender: UITextField) {
         if sender.text == "" {
             sender.text = bottomDefaultText
         }
-        unsubscribeFromKeyboardNotifications()
+        
         shareButton.isEnabled = true
         cancelButton.isEnabled = true
     }
@@ -112,16 +107,17 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        let offset = getKeyboardHeight(notification)
-        //I only want to move the bottom text field
-        bottomTextFieldBottomConstraint.constant -= offset
+        if bottomTextField.isFirstResponder {
+            self.view.frame.origin.y -= getKeyboardHeight(notification)
+        }
+        
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        let offset = getKeyboardHeight(notification)
-        //I only want to move the bottom text field
-        // Todo: Not working when I tap the "Dismiss Key" on iPad!
-        bottomTextFieldBottomConstraint.constant += offset
+        if bottomTextField.isFirstResponder {
+            self.view.frame.origin.y += getKeyboardHeight(notification)
+        }
+        
     }
     
     func subscribeToKeyboardNotifications() {
@@ -153,8 +149,20 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     func save() {
         // Create the meme
-        self.meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage!)
+        self.meme =
+            Meme(
+            topText: topTextField.text!,
+            bottomText: bottomTextField.text!,
+            originalImage: imagePickerView.image!,
+            memedImage: memedImage!);
         
+    }
+    
+    func chooseSourceType(_ sourceType: UIImagePickerControllerSourceType) {
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.sourceType = sourceType
+        self.present(pickerController, animated: true, completion: nil)
     }
     
     // Mark: overridden functions
@@ -180,51 +188,16 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         shareButton.isEnabled = false
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
- 
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        subscribeToKeyboardNotifications()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        unsubscribeFromKeyboardNotifications()
     }
-
-    // Mark: UIImagePickerControllerDelegate
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-            imagePickerView.image = image
-            shareButton.isEnabled = true
-            topTextField.isEnabled = true
-            bottomTextField.isEnabled = true
-            topTextField.text = topDefaultText
-            bottomTextField.text = bottomDefaultText
-            cancelButton.isEnabled = true
-        }
-        // Todo: Why the toolbar is always squeezed every time when UIImagePickerController is dismissed with imagePickerView.image being assigned? Is it a bug? Maybe we should create a separate ViewController 
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    // Mark: UITextFieldDelegate
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return false
-    }
-    
-
 }
 
