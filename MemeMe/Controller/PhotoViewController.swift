@@ -84,8 +84,8 @@ class PhotoViewController: UIViewController {
         cancelButton.isEnabled = true
     }
     
-    
     // Mark: member variables
+    
     var memedImage: UIImage?
     var meme: Meme?
     let topDefaultText = "TOP"
@@ -97,6 +97,31 @@ class PhotoViewController: UIViewController {
         NSAttributedStringKey.font.rawValue: UIFont(name: "MarkerFelt-Wide", size: 40)!,
         NSAttributedStringKey.strokeWidth.rawValue: -1.0
     ]
+    
+    // Mark: overridden functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configure(textField: topTextField, withText: topDefaultText, withAttribute: memeTextAttributes, enabled: false, alignment: .center, delegate: self)
+        configure(textField: bottomTextField, withText: bottomDefaultText, withAttribute: memeTextAttributes, enabled: false, alignment: .center, delegate: self)
+        
+        imagePickerView.image = nil
+        cancelButton.isEnabled = false
+        shareButton.isEnabled = false
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
+    }
     
     // Mark: member functions
     
@@ -132,8 +157,7 @@ class PhotoViewController: UIViewController {
     
     func generateMemedImage() -> UIImage {
         
-        navBar.isHidden = true
-        toolBar.isHidden = true
+        displayBars(hide: true)
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -141,8 +165,7 @@ class PhotoViewController: UIViewController {
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        navBar.isHidden = false
-        toolBar.isHidden = false
+        displayBars(hide: false)
         
         return memedImage
     }
@@ -155,7 +178,6 @@ class PhotoViewController: UIViewController {
             bottomText: bottomTextField.text!,
             originalImage: imagePickerView.image!,
             memedImage: memedImage!);
-        
     }
     
     func chooseSourceType(_ sourceType: UIImagePickerControllerSourceType) {
@@ -165,39 +187,17 @@ class PhotoViewController: UIViewController {
         self.present(pickerController, animated: true, completion: nil)
     }
     
-    // Mark: overridden functions
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        
-        topTextField.text = topDefaultText
-        
-        topTextField.isEnabled = false
-        topTextField.textAlignment = .center
-        topTextField.delegate = self
-        
-        bottomTextField.text = bottomDefaultText
-        bottomTextField.isEnabled = false
-        bottomTextField.textAlignment = .center
-        bottomTextField.delegate = self
-        imagePickerView.image = nil
-        cancelButton.isEnabled = false
-        shareButton.isEnabled = false
-        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
-        
+    func configure (textField: UITextField, withText: String, withAttribute: [String: Any], enabled: Bool, alignment: NSTextAlignment, delegate: UITextFieldDelegate) {
+        textField.defaultTextAttributes = withAttribute
+        textField.text = withText
+        textField.isEnabled = enabled
+        textField.textAlignment = alignment
+        textField.delegate = delegate
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        subscribeToKeyboardNotifications()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        unsubscribeFromKeyboardNotifications()
+    func displayBars(hide: Bool){
+        navBar.isHidden = hide
+        toolBar.isHidden = hide
     }
 }
 
