@@ -14,6 +14,8 @@
 		284BBF242008DBC80055A5D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 284BBF222008DBC80055A5D0 /* LaunchScreen.storyboard */; };
 		286ABAEB200E1C3E0087CB19 /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286ABAEA200E1C3E0087CB19 /* Meme.swift */; };
 		28E61494201F49E300876847 /* PhotoViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E61493201F49E300876847 /* PhotoViewControllerExtension.swift */; };
+		28FE5E9320344D2300FCF701 /* MemeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE5E9220344D2300FCF701 /* MemeTableViewController.swift */; };
+		28FE5E9520344D3600FCF701 /* MemeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE5E9420344D3600FCF701 /* MemeCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		284BBF252008DBC80055A5D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		286ABAEA200E1C3E0087CB19 /* Meme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
 		28E61493201F49E300876847 /* PhotoViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewControllerExtension.swift; sourceTree = "<group>"; };
+		28FE5E9220344D2300FCF701 /* MemeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeTableViewController.swift; sourceTree = "<group>"; };
+		28FE5E9420344D3600FCF701 /* MemeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				28E61492201F49BD00876847 /* Extensions */,
+				28FE5E9420344D3600FCF701 /* MemeCollectionViewController.swift */,
+				28FE5E9220344D2300FCF701 /* MemeTableViewController.swift */,
 				284BBF1B2008DBC80055A5D0 /* PhotoViewController.swift */,
 			);
 			path = Controller;
@@ -177,6 +183,8 @@
 				286ABAEB200E1C3E0087CB19 /* Meme.swift in Sources */,
 				284BBF1C2008DBC80055A5D0 /* PhotoViewController.swift in Sources */,
 				284BBF1A2008DBC80055A5D0 /* AppDelegate.swift in Sources */,
+				28FE5E9320344D2300FCF701 /* MemeTableViewController.swift in Sources */,
+				28FE5E9520344D3600FCF701 /* MemeCollectionViewController.swift in Sources */,
 				28E61494201F49E300876847 /* PhotoViewControllerExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

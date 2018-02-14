@@ -172,12 +172,15 @@ class PhotoViewController: UIViewController {
     
     func save() {
         // Create the meme
-        self.meme =
+        let meme =
             Meme(
             topText: topTextField.text!,
             bottomText: bottomTextField.text!,
             originalImage: imagePickerView.image!,
             memedImage: memedImage!);
+        let object = UIApplication.shared.delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
     }
     
     func chooseSourceType(_ sourceType: UIImagePickerControllerSourceType) {
