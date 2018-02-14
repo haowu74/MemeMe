@@ -12,6 +12,8 @@ class MemeTableViewController: UITableViewController{
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    let cellHeight: CGFloat = 100.0
+    
     var memes: [Meme]?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,11 +42,14 @@ class MemeTableViewController: UITableViewController{
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-
+        let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
+        detailController.memeIndex = (indexPath as NSIndexPath).row
+        self.navigationController!.pushViewController(detailController, animated: true)
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return 100.0;//Choose your custom row height
+        return cellHeight;//Choose your custom row height
     }
 }

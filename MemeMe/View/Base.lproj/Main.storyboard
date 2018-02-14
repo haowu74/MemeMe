@@ -245,7 +245,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="671" y="136"/>
+            <point key="canvasLocation" x="1217" y="-300"/>
+        </scene>
+        <!--Meme Detail View Controller-->
+        <scene sceneID="fM8-Xm-6W5">
+            <objects>
+                <viewController storyboardIdentifier="MemeDetailViewController" id="o3U-NJ-Zct" customClass="MemeDetailViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n8f-Cr-EN4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8fy-Vq-NsE">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="iH8-QF-cye" firstAttribute="bottom" secondItem="8fy-Vq-NsE" secondAttribute="bottom" id="4J2-8w-RNo"/>
+                            <constraint firstItem="iH8-QF-cye" firstAttribute="trailing" secondItem="8fy-Vq-NsE" secondAttribute="trailing" id="ann-Yd-lDL"/>
+                            <constraint firstItem="8fy-Vq-NsE" firstAttribute="top" secondItem="iH8-QF-cye" secondAttribute="top" id="atj-mt-tWB"/>
+                            <constraint firstItem="8fy-Vq-NsE" firstAttribute="leading" secondItem="iH8-QF-cye" secondAttribute="leading" id="mLR-UN-zkp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iH8-QF-cye"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="8fy-Vq-NsE" id="ZcC-tN-3cB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mx4-Ps-1E8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1216.8" y="461.91904047976016"/>
         </scene>
     </scenes>
 </document>
