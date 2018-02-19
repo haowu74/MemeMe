@@ -19,6 +19,8 @@ class MemeTableViewController: UITableViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         memes = appDelegate.memes
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.tabBarController?.tabBar.isHidden = false
         self.tableView.reloadData()
     }
     

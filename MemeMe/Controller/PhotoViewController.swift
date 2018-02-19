@@ -35,11 +35,16 @@ class PhotoViewController: UIViewController {
         topTextField.text = topDefaultText
         bottomTextField.text = bottomDefaultText
         imagePickerView.image = nil
-        cancelButton.isEnabled = false
+
         topTextField.isEnabled = false
         bottomTextField.isEnabled = false
         shareButton.isEnabled = false
-        self.view.endEditing(true)
+        if memedIndex == nil {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        
     }
     
     @IBAction func shareButtonTouched(_ sender: Any) {
@@ -48,16 +53,22 @@ class PhotoViewController: UIViewController {
         shareController.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) -> Void in
             if completed {
                 self.save()
-                self.dismiss(animated: true, completion: nil)
+                if self.memedIndex == nil {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
             }
         }
+        
+        shareController.popoverPresentationController?.sourceView = self.view
         self.present(shareController, animated: true, completion: nil)
     }
     
     @IBAction func topTextFieldEditingDidBegin(_ sender: UITextField) {
         sender.text = ""
         shareButton.isEnabled = false
-        cancelButton.isEnabled = false
+
     }
     
     @IBAction func topTextFieldEditingDidEnd(_ sender: UITextField) {
@@ -65,13 +76,13 @@ class PhotoViewController: UIViewController {
             sender.text = topDefaultText
         }
         shareButton.isEnabled = true
-        cancelButton.isEnabled = true
+
     }
     
     @IBAction func bottomTextFieldEdittingDidBegin(_ sender: UITextField) {
         sender.text = ""
         shareButton.isEnabled = false
-        cancelButton.isEnabled = false
+
         
     }
     
@@ -81,15 +92,16 @@ class PhotoViewController: UIViewController {
         }
         
         shareButton.isEnabled = true
-        cancelButton.isEnabled = true
+
     }
     
     // Mark: member variables
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var memedIndex: Int?
     var memedImage: UIImage?
     var meme: Meme?
-    let topDefaultText = "TOP"
-    let bottomDefaultText = "BOTTOM"
+    var topDefaultText = "TOP"
+    var bottomDefaultText = "BOTTOM"
     
     let memeTextAttributes:[String:Any] = [
         NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
@@ -103,11 +115,14 @@ class PhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configure(textField: topTextField, withText: topDefaultText, withAttribute: memeTextAttributes, enabled: false, alignment: .center, delegate: self)
-        configure(textField: bottomTextField, withText: bottomDefaultText, withAttribute: memeTextAttributes, enabled: false, alignment: .center, delegate: self)
+        if let index = memedIndex {
+            memedImage = appDelegate.memes[index].originalImage
+            topDefaultText = appDelegate.memes[index].topText!
+            bottomDefaultText = appDelegate.memes[index].bottomText!
+        }
         
-        imagePickerView.image = nil
-        cancelButton.isEnabled = false
+        showMeme()
+        
         shareButton.isEnabled = false
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
@@ -201,6 +216,17 @@ class PhotoViewController: UIViewController {
     func displayBars(hide: Bool){
         navBar.isHidden = hide
         toolBar.isHidden = hide
+    }
+    
+    func showMeme() {
+        configure(textField: topTextField, withText: topDefaultText, withAttribute: memeTextAttributes, enabled: memedImage != nil, alignment: .center, delegate: self)
+        configure(textField: bottomTextField, withText: bottomDefaultText, withAttribute: memeTextAttributes, enabled: memedImage != nil, alignment: .center, delegate: self)
+        if let image = memedImage {
+            imagePickerView.image = image
+        } else {
+            imagePickerView.image = nil
+        }
+        
     }
 }
 
