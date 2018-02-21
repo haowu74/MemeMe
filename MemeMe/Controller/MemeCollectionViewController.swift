@@ -10,6 +10,8 @@ import UIKit
 
 class MemeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    // Mark: member variables
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     let cellHeight: CGFloat = 100.0
@@ -23,7 +25,7 @@ class MemeCollectionViewController: UICollectionViewController, UICollectionView
         self.collectionView?.reloadData()
     }
     
-    // MARK: Collection View Data Source
+    // Mark: overridden functions
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let m = memes {
@@ -31,7 +33,6 @@ class MemeCollectionViewController: UICollectionViewController, UICollectionView
         } else {
             return 0
         }
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -44,7 +45,6 @@ class MemeCollectionViewController: UICollectionViewController, UICollectionView
             cell.memeImageView?.image = meme.memedImage
         }
         return cell
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath:IndexPath) {
@@ -52,12 +52,10 @@ class MemeCollectionViewController: UICollectionViewController, UICollectionView
         let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
         detailController.memeIndex = (indexPath as NSIndexPath).row
         self.navigationController!.pushViewController(detailController, animated: true)
-
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: cellHeight, height: cellHeight)
+        return CGSize(width: cellHeight, height: cellHeight) //Choose custom cell height / width
     }
     
-
 }

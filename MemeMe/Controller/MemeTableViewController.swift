@@ -10,12 +10,15 @@ import UIKit
 
 class MemeTableViewController: UITableViewController{
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    // Mark: member variables
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    // define the cell height in table view
     let cellHeight: CGFloat = 100.0
     
     var memes: [Meme]?
     
+    // Mark: overridden functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         memes = appDelegate.memes
@@ -52,6 +55,6 @@ class MemeTableViewController: UITableViewController{
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return cellHeight;//Choose your custom row height
+        return cellHeight;  //Choose custom row height
     }
 }

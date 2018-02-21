@@ -9,6 +9,7 @@
 import UIKit
 
 extension PhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+    
     // Mark: UIImagePickerControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -21,7 +22,6 @@ extension PhotoViewController: UIImagePickerControllerDelegate, UINavigationCont
             bottomTextField.text = bottomDefaultText
             cancelButton.isEnabled = true
         }
-        // Todo: Why the toolbar is always squeezed every time when UIImagePickerController is dismissed with imagePickerView.image being assigned? Is it a bug? Maybe we should create a separate ViewController
         dismiss(animated: true, completion: nil)
     }
     
